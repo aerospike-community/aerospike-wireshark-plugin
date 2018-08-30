@@ -1,6 +1,8 @@
 README
 ======
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 The Aerospike Wireshark plugin is implemented using the Lua
 programming language. The Wireshark version that you use needs to have
 built-in support for Lua. You can check the same in Wireshark by
