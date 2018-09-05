@@ -8,7 +8,9 @@
       <field name="timestamp" pos="0" show="Nov 30, 2017 15:40:44.215336513 IST" showname="Captured Time" value="1512036644.215336513" size="148"/>
     </proto>
     <proto name="frame" showname="Frame 1: 148 bytes on wire (1184 bits), 148 bytes captured (1184 bits) on interface 0" size="148" pos="0">
-      <field name="frame.interface_id" showname="Interface id: 0 (any)" size="0" pos="0" show="0"/>
+      <field name="frame.interface_id" showname="Interface id: 0 (any)" size="0" pos="0" show="0">
+        <field name="frame.interface_name" showname="Interface name: any" size="0" pos="0" show="any"/>
+      </field>
       <field name="frame.encap_type" showname="Encapsulation type: Linux cooked-mode capture (25)" size="0" pos="0" show="25"/>
       <field name="frame.time" showname="Arrival Time: Nov 30, 2017 15:40:44.215336513 IST" size="0" pos="0" show="Nov 30, 2017 15:40:44.215336513 IST"/>
       <field name="frame.offset_shift" showname="Time shift for this packet: 0.000000000 seconds" size="0" pos="0" show="0.000000000"/>
@@ -28,6 +30,7 @@
       <field name="sll.hatype" showname="Link-layer address type: 772" size="2" pos="2" show="772" value="0304"/>
       <field name="sll.halen" showname="Link-layer address length: 6" size="2" pos="4" show="6" value="0006"/>
       <field name="sll.src.eth" showname="Source: 00:00:00_00:00:00 (00:00:00:00:00:00)" size="6" pos="6" show="00:00:00:00:00:00" value="000000000000"/>
+      <field name="sll.unused" showname="Unused: 0000" size="2" pos="12" show="00:00" value="0000"/>
       <field name="sll.etype" showname="Protocol: IPv4 (0x0800)" size="2" pos="14" show="0x00000800" value="0800"/>
     </proto>
     <proto name="ip" showname="Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1" size="20" pos="16">
@@ -70,7 +73,7 @@
       <field name="tcp.seq" showname="Sequence number: 1    (relative sequence number)" size="4" pos="40" show="1" value="9c18c363"/>
       <field name="tcp.nxtseq" showname="Next sequence number: 81    (relative sequence number)" size="0" pos="36" show="81"/>
       <field name="tcp.ack" showname="Acknowledgment number: 1    (relative ack number)" size="4" pos="44" show="1" value="595e4c12"/>
-      <field name="tcp.hdr_len" showname="Header Length: 32 bytes" size="1" pos="48" show="32" value="80"/>
+      <field name="tcp.hdr_len" showname="1000 .... = Header Length: 32 bytes (8)" size="1" pos="48" show="32" value="80"/>
       <field name="tcp.flags" showname="Flags: 0x018 (PSH, ACK)" size="2" pos="48" show="0x00000018" value="18" unmaskedvalue="8018">
         <field name="tcp.flags.res" showname="000. .... .... = Reserved: Not set" size="1" pos="48" show="0" value="0" unmaskedvalue="80"/>
         <field name="tcp.flags.ns" showname="...0 .... .... = Nonce: Not set" size="1" pos="48" show="0" value="0" unmaskedvalue="80"/>
@@ -91,21 +94,13 @@
       <field name="tcp.checksum.status" showname="Checksum Status: Unverified" size="0" pos="52" show="2"/>
       <field name="tcp.urgent_pointer" showname="Urgent pointer: 0" size="2" pos="54" show="0" value="0000"/>
       <field name="tcp.options" showname="Options: (12 bytes), No-Operation (NOP), No-Operation (NOP), Timestamps" size="12" pos="56" show="01:01:08:0a:00:3b:af:58:00:3b:ad:bc" value="0101080a003baf58003badbc">
-        <field name="" show="No-Operation (NOP)" size="1" pos="56" value="01">
-          <field name="tcp.options.type" showname="Type: 1" size="1" pos="56" show="1" value="01">
-            <field name="tcp.options.type.copy" showname="0... .... = Copy on fragmentation: No" size="1" pos="56" show="0" value="0" unmaskedvalue="01"/>
-            <field name="tcp.options.type.class" showname=".00. .... = Class: Control (0)" size="1" pos="56" show="0" value="0" unmaskedvalue="01"/>
-            <field name="tcp.options.type.number" showname="...0 0001 = Number: No-Operation (NOP) (1)" size="1" pos="56" show="1" value="1" unmaskedvalue="01"/>
-          </field>
+        <field name="tcp.options.nop" showname="TCP Option - No-Operation (NOP)" size="1" pos="56" show="01" value="01">
+          <field name="tcp.option_kind" showname="Kind: No-Operation (1)" size="1" pos="56" show="1" value="01"/>
         </field>
-        <field name="" show="No-Operation (NOP)" size="1" pos="57" value="01">
-          <field name="tcp.options.type" showname="Type: 1" size="1" pos="57" show="1" value="01">
-            <field name="tcp.options.type.copy" showname="0... .... = Copy on fragmentation: No" size="1" pos="57" show="0" value="0" unmaskedvalue="01"/>
-            <field name="tcp.options.type.class" showname=".00. .... = Class: Control (0)" size="1" pos="57" show="0" value="0" unmaskedvalue="01"/>
-            <field name="tcp.options.type.number" showname="...0 0001 = Number: No-Operation (NOP) (1)" size="1" pos="57" show="1" value="1" unmaskedvalue="01"/>
-          </field>
+        <field name="tcp.options.nop" showname="TCP Option - No-Operation (NOP)" size="1" pos="57" show="01" value="01">
+          <field name="tcp.option_kind" showname="Kind: No-Operation (1)" size="1" pos="57" show="1" value="01"/>
         </field>
-        <field name="" show="Timestamps: TSval 3911512, TSecr 3911100" size="10" pos="58" value="080a003baf58003badbc">
+        <field name="tcp.options.timestamp" showname="TCP Option - Timestamps: TSval 3911512, TSecr 3911100" size="10" pos="58" show="08:0a:00:3b:af:58:00:3b:ad:bc" value="080a003baf58003badbc">
           <field name="tcp.option_kind" showname="Kind: Time Stamp Option (8)" size="1" pos="58" show="8" value="08"/>
           <field name="tcp.option_len" showname="Length: 10" size="1" pos="59" show="10" value="0a"/>
           <field name="tcp.options.timestamp.tsval" showname="Timestamp value: 3911512" size="4" pos="60" show="3911512" value="003baf58"/>
@@ -116,6 +111,7 @@
         <field name="tcp.analysis.bytes_in_flight" showname="Bytes in flight: 80" size="0" pos="36" show="80"/>
         <field name="tcp.analysis.push_bytes_sent" showname="Bytes sent since last PSH flag: 80" size="0" pos="36" show="80"/>
       </field>
+      <field name="tcp.payload" showname="TCP payload (80 bytes)" size="80" pos="68" show="02:03:00:00:00:00:00:48:16:01:00:00:00:00:00:00:00:00:00:00:00:00:00:00:03:e8:00:05:00:00:00:00:00:05:00:74:65:73:74:00:00:00:08:01:74:65:73:74:73:65:74:00:00:00:03:08:28:64:00:00:00:05:09:00:00:27:10:00:00:00:09:07:42:38:c1:31:a2:56:78:5c" value="02030000000000481601000000000000000000000000000003e8000500000000000500746573740000000801746573747365740000000308286400000005090000271000000009074238c131a256785c"/>
     </proto>
     <proto name="fake-field-wrapper">
       <field name="data" value="02030000000000481601000000000000000000000000000003e8000500000000000500746573740000000801746573747365740000000308286400000005090000271000000009074238c131a256785c">
