@@ -8,6 +8,16 @@ check_output = @(echo -n "Testing $(notdir $1)" && cd $(dir $1) && \
 
 all: test
 
+coverage:
+	@echo "Running Wireshark with test captures ...\n"
+	for i in *.pcapng; do \
+		wireshark -r $$i -X lua_script:../lua/aerospike.lua & sleep 6; wmctrl -c $$i ; \
+	done
+	sleep 3
+	@echo "\nGenerate report using luacov-console ...\n"
+	luacov-console ../lua
+	luacov-console -s --no-colored
+
 %.pdml.current: %.pdml %
 	$(call check_output, $<, $@)
 
@@ -15,6 +25,6 @@ test: $(TEST_CASES:.pdml=.pdml.current)
 
 clean:
 	@rm -f $(TEST_CASES:.pdml=.pdml.current)
-	@rm -f *~
+	@rm -f *~ luacov.*
 
 .PHONY: clean

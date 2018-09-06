@@ -70,6 +70,30 @@ The following Aerospike wire protocols are supported:
 | Heartbeat |
 | Batch     |
 
+Testing
+=======
+
+You can run automated tests using the following commands from the
+tests/ folder:
+
+    $ cd tests
+    $ make clean && make test
+
+Coverage
+========
+
+luacov and luacov-console installed using luarocks can generate code
+coverage report. You need to have wmctrl installed on your system. For
+example, on Ubuntu:
+
+    $ sudo apt-get install wmctrl
+
+You can generate the code coverage summary report from the tests/
+folder using the following commands:
+
+    $ cd tests
+    $ make clean && make coverage
+
 Bugs
 ====
 

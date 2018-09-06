@@ -17,6 +17,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Run with: wireshark -X lua_script:aerospike.lua capture.pcapng
 
+# Requires
+
+    local luacov = require("luacov")
+
 # Configuration
 
     local default_settings = {
