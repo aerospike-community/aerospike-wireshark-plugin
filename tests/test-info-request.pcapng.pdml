@@ -23,7 +23,7 @@
       <field name="frame.cap_len" showname="Capture Length: 119 bytes (952 bits)" size="0" pos="0" show="119"/>
       <field name="frame.marked" showname="Frame is marked: False" size="0" pos="0" show="0"/>
       <field name="frame.ignored" showname="Frame is ignored: False" size="0" pos="0" show="0"/>
-      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:data" size="0" pos="0" show="sll:ethertype:ip:tcp:data"/>
+      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:aerospikeprotocol" size="0" pos="0" show="sll:ethertype:ip:tcp:aerospikeprotocol"/>
     </proto>
     <proto name="sll" showname="Linux cooked capture" size="16" pos="0">
       <field name="sll.pkttype" showname="Packet type: Unicast to us (0)" size="2" pos="0" show="0" value="0000"/>
@@ -114,10 +114,12 @@
       <field name="tcp.payload" showname="TCP payload (51 bytes)" size="51" pos="68" show="02:01:00:00:00:00:00:2b:6e:6f:64:65:0a:70:65:65:72:73:2d:67:65:6e:65:72:61:74:69:6f:6e:0a:70:61:72:74:69:74:69:6f:6e:2d:67:65:6e:65:72:61:74:69:6f:6e:0a" value="020100000000002b6e6f64650a70656572732d67656e65726174696f6e0a706172746974696f6e2d67656e65726174696f6e0a"/>
     </proto>
     <proto name="fake-field-wrapper">
-      <field name="data" value="020100000000002b6e6f64650a70656572732d67656e65726174696f6e0a706172746974696f6e2d67656e65726174696f6e0a">
-        <field name="data.data" showname="Data: 020100000000002b6e6f64650a70656572732d67656e6572..." size="51" pos="68" show="02:01:00:00:00:00:00:2b:6e:6f:64:65:0a:70:65:65:72:73:2d:67:65:6e:65:72:61:74:69:6f:6e:0a:70:61:72:74:69:74:69:6f:6e:2d:67:65:6e:65:72:61:74:69:6f:6e:0a" value="020100000000002b6e6f64650a70656572732d67656e65726174696f6e0a706172746974696f6e2d67656e65726174696f6e0a"/>
-        <field name="data.len" showname="Length: 51" size="0" pos="68" show="51"/>
-      </field>
+      <field name="_ws.lua.fake" showname="Wireshark Lua fake item" hide="yes" size="0" pos="68" show="" value=""/>
+    </proto>
+    <proto name="aerospike" showname="Aerospike Info Protocol" size="51" pos="68">
+      <field name="header.attribute" showname="Attribute: node" size="4" pos="76" show="node" value="6e6f6465"/>
+      <field name="header.attribute" showname="Attribute: peers-generation" size="16" pos="81" show="peers-generation" value="70656572732d67656e65726174696f6e"/>
+      <field name="header.attribute" showname="Attribute: partition-generation" size="20" pos="98" show="partition-generation" value="706172746974696f6e2d67656e65726174696f6e"/>
     </proto>
   </packet>
 </pdml>

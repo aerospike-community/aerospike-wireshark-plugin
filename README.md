@@ -82,17 +82,9 @@ tests/ folder:
 Coverage
 ========
 
-luacov and luacov-console installed using luarocks can generate code
-coverage report. You need to have wmctrl installed on your system. For
-example, on Ubuntu:
-
-    $ sudo apt-get install wmctrl
-
-You can generate the code coverage summary report from the tests/
-folder using the following commands:
-
-    $ cd tests
-    $ make clean && make coverage
+luacov and luacov-console installed using luarocks are required to
+produce code coverage report. Running the tests will also generate the
+coverage summary report.
 
 Bugs
 ====

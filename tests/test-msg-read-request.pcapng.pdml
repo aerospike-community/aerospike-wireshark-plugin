@@ -23,7 +23,7 @@
       <field name="frame.cap_len" showname="Capture Length: 148 bytes (1184 bits)" size="0" pos="0" show="148"/>
       <field name="frame.marked" showname="Frame is marked: False" size="0" pos="0" show="0"/>
       <field name="frame.ignored" showname="Frame is ignored: False" size="0" pos="0" show="0"/>
-      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:data" size="0" pos="0" show="sll:ethertype:ip:tcp:data"/>
+      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:aerospikeprotocol" size="0" pos="0" show="sll:ethertype:ip:tcp:aerospikeprotocol"/>
     </proto>
     <proto name="sll" showname="Linux cooked capture" size="16" pos="0">
       <field name="sll.pkttype" showname="Packet type: Unicast to us (0)" size="2" pos="0" show="0" value="0000"/>
@@ -114,10 +114,69 @@
       <field name="tcp.payload" showname="TCP payload (80 bytes)" size="80" pos="68" show="02:03:00:00:00:00:00:48:16:01:00:00:00:00:00:00:00:00:00:00:00:00:00:00:03:e8:00:05:00:00:00:00:00:05:00:74:65:73:74:00:00:00:08:01:74:65:73:74:73:65:74:00:00:00:03:08:28:64:00:00:00:05:09:00:00:27:10:00:00:00:09:07:42:38:c1:31:a2:56:78:5c" value="02030000000000481601000000000000000000000000000003e8000500000000000500746573740000000801746573747365740000000308286400000005090000271000000009074238c131a256785c"/>
     </proto>
     <proto name="fake-field-wrapper">
-      <field name="data" value="02030000000000481601000000000000000000000000000003e8000500000000000500746573740000000801746573747365740000000308286400000005090000271000000009074238c131a256785c">
-        <field name="data.data" showname="Data: 020300000000004816010000000000000000000000000000..." size="80" pos="68" show="02:03:00:00:00:00:00:48:16:01:00:00:00:00:00:00:00:00:00:00:00:00:00:00:03:e8:00:05:00:00:00:00:00:05:00:74:65:73:74:00:00:00:08:01:74:65:73:74:73:65:74:00:00:00:03:08:28:64:00:00:00:05:09:00:00:27:10:00:00:00:09:07:42:38:c1:31:a2:56:78:5c" value="02030000000000481601000000000000000000000000000003e8000500000000000500746573740000000801746573747365740000000308286400000005090000271000000009074238c131a256785c"/>
-        <field name="data.len" showname="Length: 80" size="0" pos="68" show="80"/>
-      </field>
+      <field name="_ws.lua.fake" showname="Wireshark Lua fake item" hide="yes" size="0" pos="68" show="" value=""/>
+    </proto>
+    <proto name="aerospikemessage" showname="Aerospike Message Protocol" size="80" pos="68">
+      <field name="message.version" showname="Version: 2" size="1" pos="68" show="2" value="02"/>
+      <field name="message.type" showname="Type: Message (3)" size="1" pos="69" show="3" value="03"/>
+      <field name="message.size" showname="Size: 72" size="6" pos="70" show="72" value="000000000048"/>
+      <proto name="aerospikemessageheader" showname="Aerospike Message Header" size="22" pos="76">
+        <field name="message.header_sz" showname="Header Size: 22" size="1" pos="76" show="22" value="16"/>
+        <proto name="aerospikeinfo1" showname="Info1 : 1" size="1" pos="77">
+          <field name="info1.level_b1" showname="0... .... = AS_MSG_INFO1_CONSISTENCY_LEVEL_B1: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.level_b0" showname=".0.. .... = AS_MSG_INFO1_CONSISTENCY_LEVEL_B0: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.get_no_bins" showname="..0. .... = AS_MSG_INFO1_GET_NO_BINS: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.xdr" showname="...0 .... = AS_MSG_INFO1_XDR: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.batch" showname=".... 0... = AS_MSG_INFO1_BATCH: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.unused" showname=".... .0.. = Unused: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.get_al" showname=".... ..0. = AS_MSG_INFO1_GET_ALL: 0" size="1" pos="77" show="0" value="0" unmaskedvalue="01"/>
+          <field name="info1.read" showname=".... ...1 = AS_MSG_INFO1_READ: 1" size="1" pos="77" show="1" value="1" unmaskedvalue="01"/>
+        </proto>
+        <proto name="aerospikeinfo2" showname="Info2 : 0" size="1" pos="78">
+          <field name="info2.respond_all_ops" showname="0... .... = AS_MSG_INFO2_RESPOND_ALL_OPS: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.unused" showname=".0.. .... = Unused: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.create_only" showname="..0. .... = AS_MSG_INFO2_CREATE_ONLY: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.durable_delete" showname="...0 .... = AS_MSG_INFO2_DURABLE_DELETE: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.generation_dt" showname=".... 0... = AS_MSG_INFO2_GENERATION_GT: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.generation" showname=".... .0.. = AS_MSG_INFO2_GENERATION: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.delete" showname=".... ..0. = AS_MSG_INFO2_DELETE: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info2.write" showname=".... ...0 = AS_MSG_INFO2_WRITE: 0" size="1" pos="78" show="0" value="0" unmaskedvalue="00"/>
+        </proto>
+        <proto name="aerospikeinfo3" showname="Info3 : 0" size="1" pos="79">
+          <field name="info3.unused1" showname="0... .... = AS_MSG_INFO3_UNUSED2: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.unused1" showname=".0.. .... = AS_MSG_INFO3_UNUSED1: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.replace_only" showname="..0. .... = AS_MSG_INFO3_REPLACE_ONLY: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.create_or_replace" showname="...0 .... = AS_MSG_INFO3_CREATE_OR_REPLACE: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.update_only" showname=".... 0... = AS_MSG_INFO3_UPDATE_ONLY: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.level_b1" showname=".... .0.. = AS_MSG_INFO3_COMMIT_LEVEL_B1: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.level_b0" showname=".... ..0. = AS_MSG_INFO3_COMMIT_LEVEL_B0: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+          <field name="info3.last" showname=".... ...0 = AS_MSG_INFO3_LAST: 0" size="1" pos="79" show="0" value="0" unmaskedvalue="00"/>
+        </proto>
+        <field name="message.unused" showname="Unused: 0" size="1" pos="80" show="0" value="00"/>
+        <field name="message.result_code" showname="Result code: 0" size="1" pos="81" show="0" value="00"/>
+        <field name="message.generation" showname="Generation: 0" size="4" pos="82" show="0" value="00000000"/>
+        <field name="message.record_ttl" showname="Record TTL: 0" size="4" pos="86" show="0" value="00000000"/>
+        <field name="message.transaction_ttl" showname="Transaction TTL: 1000" size="4" pos="90" show="1000" value="000003e8"/>
+        <field name="message.n_fields" showname="Number of fields: 5" size="2" pos="94" show="5" value="0005"/>
+        <field name="message.n_ops" showname="Number of operations: 0" size="2" pos="96" show="0" value="0000"/>
+      </proto>
+      <proto name="aerospikefields" showname="Aerospike Fields" size="50" pos="98">
+        <field name="message.size" showname="Size: 5" size="4" pos="98" show="5" value="00000005"/>
+        <field name="message.type" showname="Field Type: AS_MSG_FIELD_TYPE_NAMESPACE (0)" size="1" pos="102" show="0" value="00"/>
+        <field name="message.data_str" showname="Data string: test" size="4" pos="103" show="test" value="74657374"/>
+        <field name="message.size" showname="Size: 8" size="4" pos="107" show="8" value="00000008"/>
+        <field name="message.type" showname="Field Type: AS_MSG_FIELD_TYPE_SET (1)" size="1" pos="111" show="1" value="01"/>
+        <field name="message.data_str" showname="Data string: testset" size="7" pos="112" show="testset" value="74657374736574"/>
+        <field name="message.size" showname="Size: 3" size="4" pos="119" show="3" value="00000003"/>
+        <field name="message.type" showname="Field Type: AS_MSG_FIELD_TYPE_SCAN_OPTIONS (8)" size="1" pos="123" show="8" value="08"/>
+        <field name="message.bytes" showname="Data bytes: 2864" size="2" pos="124" show="28:64" value="2864"/>
+        <field name="message.size" showname="Size: 5" size="4" pos="126" show="5" value="00000005"/>
+        <field name="message.type" showname="Field Type: AS_MSG_FIELD_TYPE_SOCKET_TIMEOUT (9)" size="1" pos="130" show="9" value="09"/>
+        <field name="message.data_int" showname="Data integer: 10000" size="4" pos="131" show="10000" value="00002710"/>
+        <field name="message.size" showname="Size: 9" size="4" pos="135" show="9" value="00000009"/>
+        <field name="message.type" showname="Field Type: AS_MSG_FIELD_TYPE_TRID (7)" size="1" pos="139" show="7" value="07"/>
+        <field name="message.data_int" showname="Data integer: 4771776224120174684" size="8" pos="140" show="4771776224120174684" value="4238c131a256785c"/>
+      </proto>
     </proto>
   </packet>
 </pdml>

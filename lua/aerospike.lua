@@ -118,47 +118,47 @@ end
 
 -- # GUI
 
-if not gui_enabled() then return end
+if gui_enabled() then
+   instances = 0
 
-instances = 0
+   local function menuable_tap()
+      instances = instances + 1
 
-local function menuable_tap()
-   instances = instances + 1
+      local td = {}
+      td.win = TextWindow.new("Hot Key Report " .. instances)
+      td.text = ""
+      td.instance = instances
 
-   local td = {}
-   td.win = TextWindow.new("Hot Key Report " .. instances)
-   td.text = ""
-   td.instance = instances
+      local tap = Listener.new();
 
-   local tap = Listener.new();
+      function remove_tap()
+         if tap and tap.remove then
+            tap:remove();
+         end
+      end
 
-   function remove_tap()
-      if tap and tap.remove then
-         tap:remove();
+      td.win:set_atclose(remove_tap)
+
+      function tap.draw(t)
+         td.win:clear()
+
+         calculate_delta()
+
+         td.win:append("Hot Key Report\n\n")
+         td.win:append("Key                                      Request\tResponse\tδ\n")
+         for k,v in spairs(hotkeys, function(t, a, b) return t[b][3] < t[a][3] end) do
+              td.win:append(k .. "\t" .. tostring(v[1]) .. "\t" .. tostring(v[2]) .. "\t" .. tostring(v[3]) .. "\n");
+          end
+      end
+
+      function tap.reset()
+         td.win:clear()
+         hotkeys = {}
       end
    end
 
-   td.win:set_atclose(remove_tap)
-
-   function tap.draw(t)
-      td.win:clear()
-
-      calculate_delta()
-
-      td.win:append("Hot Key Report\n\n")
-      td.win:append("Key                                      Request\tResponse\tδ\n")
-      for k,v in spairs(hotkeys, function(t, a, b) return t[b][3] < t[a][3] end) do
-           td.win:append(k .. "\t" .. tostring(v[1]) .. "\t" .. tostring(v[2]) .. "\t" .. tostring(v[3]) .. "\n");
-       end
-   end
-
-   function tap.reset()
-      td.win:clear()
-      hotkeys = {}
-   end
+   register_menu("Aerospike/Hot Key Report",menuable_tap,MENU_STAT_UNSORTED)
 end
-
-register_menu("Aerospike/Hot Key Report",menuable_tap,MENU_STAT_UNSORTED)
 
 -- # Protocols
 

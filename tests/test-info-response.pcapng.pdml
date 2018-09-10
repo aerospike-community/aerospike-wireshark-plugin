@@ -23,7 +23,7 @@
       <field name="frame.cap_len" showname="Capture Length: 139 bytes (1112 bits)" size="0" pos="0" show="139"/>
       <field name="frame.marked" showname="Frame is marked: False" size="0" pos="0" show="0"/>
       <field name="frame.ignored" showname="Frame is ignored: False" size="0" pos="0" show="0"/>
-      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:data" size="0" pos="0" show="sll:ethertype:ip:tcp:data"/>
+      <field name="frame.protocols" showname="Protocols in frame: sll:ethertype:ip:tcp:aerospikeprotocol" size="0" pos="0" show="sll:ethertype:ip:tcp:aerospikeprotocol"/>
     </proto>
     <proto name="sll" showname="Linux cooked capture" size="16" pos="0">
       <field name="sll.pkttype" showname="Packet type: Unicast to us (0)" size="2" pos="0" show="0" value="0000"/>
@@ -114,10 +114,15 @@
       <field name="tcp.payload" showname="TCP payload (71 bytes)" size="71" pos="68" show="02:01:00:00:00:00:00:3f:6e:6f:64:65:09:42:42:39:42:31:31:33:30:30:30:30:30:30:30:30:0a:70:65:65:72:73:2d:67:65:6e:65:72:61:74:69:6f:6e:09:31:0a:70:61:72:74:69:74:69:6f:6e:2d:67:65:6e:65:72:61:74:69:6f:6e:09:30:0a" value="020100000000003f6e6f6465094242394231313330303030303030300a70656572732d67656e65726174696f6e09310a706172746974696f6e2d67656e65726174696f6e09300a"/>
     </proto>
     <proto name="fake-field-wrapper">
-      <field name="data" value="020100000000003f6e6f6465094242394231313330303030303030300a70656572732d67656e65726174696f6e09310a706172746974696f6e2d67656e65726174696f6e09300a">
-        <field name="data.data" showname="Data: 020100000000003f6e6f6465094242394231313330303030..." size="71" pos="68" show="02:01:00:00:00:00:00:3f:6e:6f:64:65:09:42:42:39:42:31:31:33:30:30:30:30:30:30:30:30:0a:70:65:65:72:73:2d:67:65:6e:65:72:61:74:69:6f:6e:09:31:0a:70:61:72:74:69:74:69:6f:6e:2d:67:65:6e:65:72:61:74:69:6f:6e:09:30:0a" value="020100000000003f6e6f6465094242394231313330303030303030300a70656572732d67656e65726174696f6e09310a706172746974696f6e2d67656e65726174696f6e09300a"/>
-        <field name="data.len" showname="Length: 71" size="0" pos="68" show="71"/>
-      </field>
+      <field name="_ws.lua.fake" showname="Wireshark Lua fake item" hide="yes" size="0" pos="68" show="" value=""/>
+    </proto>
+    <proto name="aerospike" showname="Aerospike Info Protocol" size="71" pos="68">
+      <field name="header_attribute_values.attribute" showname="Attribute : node" size="4" pos="76" show="node" value="6e6f6465"/>
+      <field name="header_attribute_values.value" showname="Value: BB9B11300000000" size="15" pos="81" show="BB9B11300000000" value="424239423131333030303030303030"/>
+      <field name="header_attribute_values.attribute" showname="Attribute : peers-generation" size="16" pos="97" show="peers-generation" value="70656572732d67656e65726174696f6e"/>
+      <field name="header_attribute_values.value" showname="Value: 1" size="1" pos="114" show="1" value="31"/>
+      <field name="header_attribute_values.attribute" showname="Attribute : partition-generation" size="20" pos="116" show="partition-generation" value="706172746974696f6e2d67656e65726174696f6e"/>
+      <field name="header_attribute_values.value" showname="Value: 0" size="1" pos="137" show="0" value="30"/>
     </proto>
   </packet>
 </pdml>
