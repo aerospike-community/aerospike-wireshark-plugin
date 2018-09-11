@@ -19,6 +19,7 @@ Run with: wireshark -X lua_script:aerospike.lua capture.pcapng
 
 # Requires
 
+    _G.debug     = require("debug")
     local luacov = require("luacov")
 
 # Configuration

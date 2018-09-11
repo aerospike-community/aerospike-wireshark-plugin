@@ -86,6 +86,23 @@ luacov and luacov-console installed using luarocks are required to
 produce code coverage report. Running the tests will also generate the
 coverage summary report.
 
+When using Wireshark version prior to 2.6.4, the following additional
+changes need to be done:
+
+1. Update /usr/local/share/lua/5.1/luacov/hook.lua (or
+   ~/.luarocks/share/lua/5.1/luacov/hook.lua) with:
+
+    - local name = debug.getinfo(level, "S").source
+    + local name = "@../lua/aerospike.lua"
+
+2. If installing Luarocks packages to /usr, you need to give access to non-root user:
+
+    $ cd /usr/local/share/lua/5.1
+    $ sudo chmod a+r *
+
+Source: https://github.com/keplerproject/luacov/issues/55
+        https://github.com/luarocks/luarocks/wiki/Using-LuaRocks
+
 Bugs
 ====
 

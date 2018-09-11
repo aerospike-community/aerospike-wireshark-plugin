@@ -19,6 +19,7 @@
 
 -- # Requires
 
+_G.debug     = require("debug")
 local luacov = require("luacov")
 
 -- # Configuration
