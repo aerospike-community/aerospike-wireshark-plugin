@@ -19,8 +19,12 @@
 
 -- # Requires
 
-_G.debug     = require("debug")
-local luacov = require("luacov")
+RUN_TESTS=os.getenv("TEST")
+
+if RUN_TESTS then
+    _G.debug     = require("debug")
+    local luacov = require("luacov")
+end
 
 -- # Configuration
 
