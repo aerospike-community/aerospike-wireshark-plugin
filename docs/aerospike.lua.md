@@ -1061,10 +1061,20 @@ Register the protocol fields
           end
 
           if ops_count > 0 then
+             if operations_start == 0 then operations_start = data end -- when only ops
              next_header_start = dissect_aerospike_msg_operations(tvbuf, subtree, operations_start)
              data = next_header_start
           end
        end
+    end
+
+
+    function msg_pdu_length(tvbuf, pktinfo, offset)
+       -- Dissect the size field
+       local size_tvbr = tvbuf:range(INFO_SIZE_START, INFO_SIZE_LENGTH)
+       local size      = size_tvbr:uint64()
+
+       return tonumber(tostring(size) + INFO_SIZE_START + INFO_SIZE_LENGTH) -- include header for dissection
     end
 
     -- The following creates the callback function for the dissector.
@@ -1074,6 +1084,14 @@ Register the protocol fields
     -- this function and pass it these arguments for the packet it's dissecting.
 
     function aerospike_proto.dissector(tvbuf, pktinfo, root)
+       local pktlen = tvbuf:len()
+
+       dissect_tcp_pdus(tvbuf, root, 8, msg_pdu_length, msg_proto_dissector)
+
+       return pktlen
+    end
+
+    function msg_proto_dissector(tvbuf, pktinfo, root)
        local pktlen = tvbuf:len()
        local data, cumulative_size = 0, 0
        local packet_type = 0
@@ -1093,19 +1111,19 @@ Register the protocol fields
           local size      = size_tvbr:uint64()
 
           if header_type_val == PROTO_TYPE_INFO then        -- INFO
-          
+
              local tree = root:add(aerospike_info_proto, tvbuf:range(0, pktlen))
              dissect_aerospike_info(tvbuf, tree, size)
              data = data + size + MSG_HEADER_SZ_START
-             
+
           elseif header_type_val == PROTO_TYPE_MSG then     -- MSG
-          
+
              local subtree = root:add(aerospike_msg_proto, tvbuf:range(data + PROTO_VERSION_START, size:tonumber() + MSG_HEADER_SZ_START))
-             
+
              subtree:add(message_proto_fields.version, header_version_tvbr)
              subtree:add(message_proto_fields.type, header_type_tvbr)
              subtree:add(message_proto_fields.size, size_tvbr)
-             
+
              data = data + MSG_HEADER_SZ_START
              cumulative_size = cumulative_size + size + MSG_HEADER_SZ_START
 
