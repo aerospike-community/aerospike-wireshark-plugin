@@ -112,6 +112,7 @@
         <field name="tcp.analysis.push_bytes_sent" showname="Bytes sent since last PSH flag: 51" size="0" pos="36" show="51"/>
       </field>
       <field name="tcp.payload" showname="TCP payload (51 bytes)" size="51" pos="68" show="02:01:00:00:00:00:00:2b:6e:6f:64:65:0a:70:65:65:72:73:2d:67:65:6e:65:72:61:74:69:6f:6e:0a:70:61:72:74:69:74:69:6f:6e:2d:67:65:6e:65:72:61:74:69:6f:6e:0a" value="020100000000002b6e6f64650a70656572732d67656e65726174696f6e0a706172746974696f6e2d67656e65726174696f6e0a"/>
+      <field name="tcp.pdu.size" showname="PDU Size: 51" size="51" pos="68" show="51" value="020100000000002b6e6f64650a70656572732d67656e65726174696f6e0a706172746974696f6e2d67656e65726174696f6e0a"/>
     </proto>
     <proto name="fake-field-wrapper">
       <field name="_ws.lua.fake" showname="Wireshark Lua fake item" hide="yes" size="0" pos="68" show="" value=""/>
