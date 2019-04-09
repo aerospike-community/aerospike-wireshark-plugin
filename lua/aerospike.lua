@@ -187,8 +187,8 @@ end
 local PROTO_VERSION_START  = 0
 local PROTO_VERSION_LENGTH = 1
 
-local PROTO_HEADER_START  = 1
-local PROTO_HEADER_LENGTH = 1
+local PROTO_TYPE_START  = 1
+local PROTO_TYPE_LENGTH = 1
 
 local PROTO_TYPE_INFO = 1
 local PROTO_TYPE_MSG  = 3
@@ -1103,7 +1103,7 @@ function msg_proto_dissector(tvbuf, pktinfo, root)
       local header_version_tvbr = tvbuf:range(data + PROTO_VERSION_START, PROTO_VERSION_LENGTH)
 
       -- Dissect the type field
-      local header_type_tvbr = tvbuf:range(data + PROTO_HEADER_START, PROTO_HEADER_LENGTH)
+      local header_type_tvbr = tvbuf:range(data + PROTO_TYPE_START, PROTO_TYPE_LENGTH)
       local header_type_val  = header_type_tvbr:uint()
 
       -- Dissect the size field

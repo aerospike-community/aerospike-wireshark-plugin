@@ -14,7 +14,7 @@ all: test
 test: $(TEST_CASES:.pdml=.pdml.current)
 	@echo "\nGenerate report using luacov-console ...\n"
 	luacov-console ../lua
-	luacov-console -s --no-colored
+	luacov-console -s # --no-colored
 
 clean:
 	@rm -f $(TEST_CASES:.pdml=.pdml.current)
