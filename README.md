@@ -3,7 +3,7 @@ README
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-This Wireshark plugin is implemented using the Lua
+This plugin is implemented using the Lua
 programming language. The Wireshark version that you use needs to have
 built-in support for Lua. You can check the same in Wireshark by
 clicking on the menu *Help* -> *About Wireshark*, and you should see a
